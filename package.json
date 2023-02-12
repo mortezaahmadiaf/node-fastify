@@ -1,0 +1,20 @@
+{
+  "name": "fastify",
+  "version": "1.0.0",
+  "description": "nodejs with fastify",
+  "main": "index.js",
+  "scripts": {
+    "start":"node src"
+
+  },
+  "keywords": [
+    "node",
+    "fastify",
+    "server"
+  ],
+  "author": "Morteza Ahmadi",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.13.0"
+  }
+}
