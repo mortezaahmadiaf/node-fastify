@@ -4,7 +4,8 @@ fastify.get("/", async function (requ, res) {
 });
 const start = async () => {
   try {
-    await fastify.listen({ port: 4000 });
+    await fastify.listen({ port: 3000 });
+    console.log("server start on port 3000");
   } catch (error) {
     fastify.log.error(error);
     process.exit(1);
