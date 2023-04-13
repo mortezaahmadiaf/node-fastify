@@ -20,28 +20,58 @@ export class BaseRouter {
       delete: "/",
       patch: "/",
     };
-    this.router.post(urls.post, (req: FastifyRequest, res: FastifyReply) => {
-      this.add(req, res);
-    });
+    this.router.post(
+      urls.post,
+      {
+        // preHandler: [
+        //   (req, res, done) => {
+        //     done();
+        //   },
+        //   (req, res, done) => {
+        //     done();
+        //   },
+        // ],
+      },
+      (req: FastifyRequest, res: FastifyReply) => {
+        this.add(req, res);
+      }
+    );
 
-    this.router.put(urls.put, (req: FastifyRequest, res: FastifyReply) => {
-      this.update(req, res);
-    });
+    this.router.put(
+      urls.put,
+      this.options,
+      (req: FastifyRequest, res: FastifyReply) => {
+        this.update(req, res);
+      }
+    );
     this.router.delete(
       urls.delete,
+      this.options,
       (req: FastifyRequest, res: FastifyReply) => {
         this.delete(req, res);
       }
     );
-    this.router.get(urls.get, (req: FastifyRequest, res: FastifyReply) => {
-      this.findAll(req, res);
-    });
-    this.router.get(urls.getById, (req: FastifyRequest, res: FastifyReply) => {
-      this.findOne(req, res);
-    });
-    this.router.patch(urls.patch, (req: FastifyRequest, res: FastifyReply) => {
-      this.patch(req, res);
-    });
+    this.router.get(
+      urls.get,
+      this.options,
+      (req: FastifyRequest, res: FastifyReply) => {
+        this.findAll(req, res);
+      }
+    );
+    this.router.get(
+      urls.getById,
+      this.options,
+      (req: FastifyRequest, res: FastifyReply) => {
+        this.findOne(req, res);
+      }
+    );
+    this.router.patch(
+      urls.patch,
+      this.options,
+      (req: FastifyRequest, res: FastifyReply) => {
+        this.patch(req, res);
+      }
+    );
   }
   private add(req: FastifyRequest, res: FastifyReply) {
     this.controller.add(req, res);
