@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-
+import { authJwt } from "../Middlewares";
 export class BaseRouter {
   router: FastifyInstance;
   options: any;
@@ -23,14 +23,7 @@ export class BaseRouter {
     this.router.post(
       urls.post,
       {
-        // preHandler: [
-        //   (req, res, done) => {
-        //     done();
-        //   },
-        //   (req, res, done) => {
-        //     done();
-        //   },
-        // ],
+        preHandler: [authJwt],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.add(req, res);
@@ -39,35 +32,45 @@ export class BaseRouter {
 
     this.router.put(
       urls.put,
-      this.options,
+      {
+        preHandler: [authJwt],
+      },
       (req: FastifyRequest, res: FastifyReply) => {
         this.update(req, res);
       }
     );
     this.router.delete(
       urls.delete,
-      this.options,
+      {
+        preHandler: [authJwt],
+      },
       (req: FastifyRequest, res: FastifyReply) => {
         this.delete(req, res);
       }
     );
     this.router.get(
       urls.get,
-      this.options,
+      {
+        preHandler: [authJwt],
+      },
       (req: FastifyRequest, res: FastifyReply) => {
         this.findAll(req, res);
       }
     );
     this.router.get(
       urls.getById,
-      this.options,
+      {
+        preHandler: [authJwt],
+      },
       (req: FastifyRequest, res: FastifyReply) => {
         this.findOne(req, res);
       }
     );
     this.router.patch(
       urls.patch,
-      this.options,
+      {
+        preHandler: [authJwt],
+      },
       (req: FastifyRequest, res: FastifyReply) => {
         this.patch(req, res);
       }
