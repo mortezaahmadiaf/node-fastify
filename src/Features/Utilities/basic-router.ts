@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { authJwt } from "../Middlewares";
+import { AccessPolicy } from "../Policies";
 export class BaseRouter {
   router: FastifyInstance;
   options: any;
@@ -11,7 +11,7 @@ export class BaseRouter {
     done();
   }
 
-  init() {
+  init(accessPolicy: AccessPolicy = new AccessPolicy()) {
     let urls = {
       get: "/",
       getById: "/id/:id",
@@ -23,7 +23,7 @@ export class BaseRouter {
     this.router.post(
       urls.post,
       {
-        preHandler: [authJwt],
+        preHandler: [accessPolicy.post],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.add(req, res);
@@ -33,7 +33,7 @@ export class BaseRouter {
     this.router.put(
       urls.put,
       {
-        preHandler: [authJwt],
+        preHandler: [accessPolicy.put],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.update(req, res);
@@ -42,7 +42,7 @@ export class BaseRouter {
     this.router.delete(
       urls.delete,
       {
-        preHandler: [authJwt],
+        preHandler: [accessPolicy.delete],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.delete(req, res);
@@ -51,7 +51,7 @@ export class BaseRouter {
     this.router.get(
       urls.get,
       {
-        preHandler: [authJwt],
+        preHandler: [accessPolicy.get],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.findAll(req, res);
@@ -60,7 +60,7 @@ export class BaseRouter {
     this.router.get(
       urls.getById,
       {
-        preHandler: [authJwt],
+        preHandler: [accessPolicy.getById],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.findOne(req, res);
@@ -69,7 +69,7 @@ export class BaseRouter {
     this.router.patch(
       urls.patch,
       {
-        preHandler: [authJwt],
+        preHandler: [accessPolicy.patch],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.patch(req, res);
