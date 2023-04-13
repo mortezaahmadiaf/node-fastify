@@ -1,6 +1,8 @@
 import fastify, { FastifyInstance } from "fastify";
 import { TestRouter } from "./Routers/v1";
 import { preHandler, onSend } from "./Features/Middlewares";
+import dotenv from "dotenv";
+dotenv.config();
 export class Application {
   private app: FastifyInstance;
   private Port: number = 4001;
