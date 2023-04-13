@@ -16,10 +16,14 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.2",
+    "crypto-js": "^4.1.1",
     "fastify": "^4.13.0",
+    "jsonwebtoken": "^9.0.0",
     "nodemon": "^2.0.22"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "@types/jsonwebtoken": "^9.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
