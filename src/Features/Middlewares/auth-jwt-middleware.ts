@@ -8,8 +8,8 @@ export const authJwt = (request: any, response: FastifyReply, Next: any) => {
   if (!jwtToken)
     // send access denied
     return ResponseHandler(response, {
-      statusCode: "Unauthorized",
-      error: { message: "Unauthorized User" },
+      statusCode: "NetworkAuthenticationRequired",
+      error: { message: "Network Authentication Required" },
     });
   // sendError({ response, status: 401, message: { error: 'access denied', errorMsg: 'first send get request to /test/jwt when recive token put it in header with keyname jwt and send request' } });
   // if token exist
