@@ -1,13 +1,16 @@
 import fastify, { FastifyInstance } from "fastify";
-import { TestRouter } from "./Routers/v1";
+import { TestRouter, ProfileRoutes, UserRoutes } from "./Routers/v1";
 import { preHandler, onSend } from "./Features/Middlewares";
+import { Mysql } from "./Features/DB-Connections";
+
 import dotenv from "dotenv";
 dotenv.config();
 export class Application {
   private app: FastifyInstance;
   private Port: number = 4001;
   constructor() {
-    this.app = fastify({ logger: true });
+    this.app = fastify();
+    this.database_connection();
     this.addHook();
     this.routes();
   }
@@ -17,12 +20,30 @@ export class Application {
       (fastify, opts, done) => new TestRouter(fastify, opts, done),
       { prefix: "/test" }
     );
+    this.app.register(
+      (fastify, opts, done) => new UserRoutes(fastify, opts, done),
+      { prefix: "/user" }
+    );
+    this.app.register(
+      (fastify, opts, done) => new ProfileRoutes(fastify, opts, done),
+      { prefix: "/profile" }
+    );
   };
 
   private addHook = () => {
     this.app.addHook("preHandler", preHandler);
     this.app.addHook("onResponse", onSend);
   };
+
+  private database_connection = async () => {
+    try {
+      await Mysql.authenticate();
+      console.log("mysql : Connection has been established successfully.");
+    } catch (error) {
+      console.error("mysql : Unable to connect to the database:", error);
+    }
+  };
+
   startServer = () => {
     this.app.listen({ port: this.Port }, (error, address) => {
       if (error) {
