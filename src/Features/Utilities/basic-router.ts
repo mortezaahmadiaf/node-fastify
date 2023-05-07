@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { AccessPolicy } from "../Policies";
+import { AccessPolicy, ValidationPolicy } from "../Policies";
 export class BaseRouter {
   router: FastifyInstance;
   options: any;
@@ -11,7 +11,10 @@ export class BaseRouter {
     done();
   }
 
-  init(accessPolicy: AccessPolicy = new AccessPolicy()) {
+  init(
+    accessPolicy: AccessPolicy = new AccessPolicy(),
+    validationPolicy: ValidationPolicy = new ValidationPolicy()
+  ) {
     let urls = {
       get: "/",
       getById: "/id/:id",
@@ -23,7 +26,7 @@ export class BaseRouter {
     this.router.post(
       urls.post,
       {
-        preHandler: [accessPolicy.post],
+        preHandler: [accessPolicy.post, validationPolicy.post],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.add(req, res);
@@ -33,7 +36,7 @@ export class BaseRouter {
     this.router.put(
       urls.put,
       {
-        preHandler: [accessPolicy.put],
+        preHandler: [accessPolicy.put, validationPolicy.put],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.update(req, res);
@@ -42,7 +45,7 @@ export class BaseRouter {
     this.router.delete(
       urls.delete,
       {
-        preHandler: [accessPolicy.delete],
+        preHandler: [accessPolicy.delete, validationPolicy.delete],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.delete(req, res);
@@ -51,7 +54,7 @@ export class BaseRouter {
     this.router.get(
       urls.get,
       {
-        preHandler: [accessPolicy.get],
+        preHandler: [accessPolicy.get, validationPolicy.get],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.findAll(req, res);
@@ -60,7 +63,7 @@ export class BaseRouter {
     this.router.get(
       urls.getById,
       {
-        preHandler: [accessPolicy.getById],
+        preHandler: [accessPolicy.getById, validationPolicy.getById],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.findOne(req, res);
@@ -69,7 +72,7 @@ export class BaseRouter {
     this.router.patch(
       urls.patch,
       {
-        preHandler: [accessPolicy.patch],
+        preHandler: [accessPolicy.patch, validationPolicy.patch],
       },
       (req: FastifyRequest, res: FastifyReply) => {
         this.patch(req, res);

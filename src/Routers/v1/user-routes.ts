@@ -1,8 +1,12 @@
 import { BaseRouter } from "../../Features/Utilities";
 import { UserController } from "../../Controllers";
-import { authJwt } from "../../Features/Middlewares";
-
-import { AccessPolicy } from "../../Features/Policies";
+import { authJwt, validationMw } from "../../Features/Middlewares";
+import {
+  UserUpdateValidator,
+  UserValidator,
+  IdValidator,
+} from "../../Features/Validations";
+import { AccessPolicy, ValidationPolicy } from "../../Features/Policies";
 import { FastifyInstance } from "fastify";
 export class UserRoutes extends BaseRouter {
   constructor(fastify: FastifyInstance, opts: any, done: any) {
@@ -18,7 +22,10 @@ export class UserRoutes extends BaseRouter {
     accessPolicy.getById = authJwt;
     accessPolicy.delete = authJwt;
     accessPolicy.patch = authJwt;
-
-    super.init(accessPolicy);
+    const validationPolicy: ValidationPolicy = new ValidationPolicy();
+    validationPolicy.post = validationMw(UserValidator);
+    validationPolicy.put = validationMw(UserUpdateValidator);
+    validationPolicy.delete = validationMw(IdValidator);
+    super.init(accessPolicy, validationPolicy);
   }
 }
