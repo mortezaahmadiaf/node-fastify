@@ -1,0 +1,36 @@
+{
+  "name": "fastify",
+  "version": "1.0.0",
+  "description": "nodejs with fastify",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [
+    "node",
+    "fastify",
+    "server"
+  ],
+  "author": "Morteza Ahmadi",
+  "license": "ISC",
+  "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.23",
+    "chalk": "^4.1.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.13.0",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.2.4",
+    "nodemon": "^2.0.22",
+    "redis": "^4.6.6"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "@types/jsonwebtoken": "^9.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
