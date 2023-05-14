@@ -24,7 +24,8 @@
     "fastify": "^4.13.0",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.2.4",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "redis": "^4.6.6"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",

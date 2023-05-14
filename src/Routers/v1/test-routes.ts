@@ -26,6 +26,13 @@ export class TestRouter extends BaseRouter {
         this.decorateJWT(req, res);
       }
     );
+    this.router.get("/redis/:key", (req: FastifyRequest, res: FastifyReply) => {
+      this.redisGetItem(req, res);
+    });
+
+    this.router.post("/redis", (req: FastifyRequest, res: FastifyReply) => {
+      this.redisSetItem(req, res);
+    });
   };
 
   private generateJWT = (req: FastifyRequest, res: FastifyReply) => {
@@ -33,5 +40,11 @@ export class TestRouter extends BaseRouter {
   };
   private decorateJWT = (req: FastifyRequest, res: FastifyReply) => {
     this.controller.decorateJWT(req, res);
+  };
+  private redisSetItem = (req: FastifyRequest, res: FastifyReply) => {
+    this.controller.redisSetItem(req, res);
+  };
+  private redisGetItem = (req: FastifyRequest, res: FastifyReply) => {
+    this.controller.redisGetItem(req, res);
   };
 }
