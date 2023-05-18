@@ -5,6 +5,7 @@ import {
   jwtDecorator,
   jwtGenerator,
   Redis,
+  RabbitMQSend,
 } from "../../Features/Utilities";
 
 export class TestController {
@@ -93,6 +94,19 @@ export class TestController {
         statusCode: "OK",
         payload: { data: { key } },
       });
+    } catch (error) {
+      ResponseHandler(response, {
+        statusCode: "BadRequest",
+        error: { errors: error },
+      });
+    }
+  }
+  async rabbitmq(req: FastifyRequest, response: FastifyReply) {
+    const props = req.body;
+    const rabbit = new RabbitMQSend();
+    try {
+      const res = await rabbit.sendTest(JSON.stringify(props));
+      ResponseHandler(response, { statusCode: "OK", payload: { data: res } });
     } catch (error) {
       ResponseHandler(response, {
         statusCode: "BadRequest",
