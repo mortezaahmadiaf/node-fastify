@@ -2,6 +2,7 @@ import fastify, { FastifyInstance } from "fastify";
 import { TestRouter, ProfileRoutes, UserRoutes } from "./Routers/v1";
 import { preHandler, onSend } from "./Features/Middlewares";
 import { Mysql } from "./Features/DB-Connections";
+import { RabbitMQConsume } from "./Features/Utilities/rabbit-mq";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -10,6 +11,7 @@ export class Application {
   private Port: number = 4001;
   constructor() {
     this.app = fastify();
+    this.rabbitMqConsumer();
     this.database_connection();
     this.addHook();
     this.routes();
@@ -29,6 +31,13 @@ export class Application {
       { prefix: "/profile" }
     );
   };
+
+  async rabbitMqConsumer() {
+    try {
+      const rabbit = new RabbitMQConsume();
+      await rabbit.consumeAll();
+    } catch (error) {}
+  }
 
   private addHook = () => {
     this.app.addHook("preHandler", preHandler);
