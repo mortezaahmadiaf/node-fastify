@@ -33,6 +33,9 @@ export class TestRouter extends BaseRouter {
     this.router.post("/redis", (req: FastifyRequest, res: FastifyReply) => {
       this.redisSetItem(req, res);
     });
+    this.router.post("/rabbitmq", (req: FastifyRequest, res: FastifyReply) => {
+      this.rabbitmq(req, res);
+    });
   };
 
   private generateJWT = (req: FastifyRequest, res: FastifyReply) => {
@@ -46,5 +49,8 @@ export class TestRouter extends BaseRouter {
   };
   private redisGetItem = (req: FastifyRequest, res: FastifyReply) => {
     this.controller.redisGetItem(req, res);
+  };
+  private rabbitmq = (req: FastifyRequest, res: FastifyReply) => {
+    this.controller.rabbitmq(req, res);
   };
 }
