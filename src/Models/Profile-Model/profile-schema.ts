@@ -91,4 +91,11 @@ export interface IUpdateProfile {
   firstName: string;
   lastName?: string;
 }
+
+export interface IProfileI {
+  id: string;
+  UserId: string;
+  firstName: string;
+  lastName?: string;
+}
 export { Profile };
