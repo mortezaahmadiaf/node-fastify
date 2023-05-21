@@ -1,4 +1,5 @@
 import fastify, { FastifyInstance, FastifyReply } from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import { TestRouter, ProfileRoutes, UserRoutes } from "./Routers/v1";
 import { preHandler, onSend } from "./Features/Middlewares";
 import { Mysql } from "./Features/DB-Connections";
@@ -7,6 +8,8 @@ import * as swagger from "./Routers/Docs/swagger.json";
 import dotenv from "dotenv";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+
+import dotenv from "dotenv";
 dotenv.config();
 export class Application {
   private app: FastifyInstance;
@@ -49,6 +52,8 @@ export class Application {
       transformSpecificationClone: true,
     });
   }
+  };
+
   async rabbitMqConsumer() {
     try {
       const rabbit = new RabbitMQConsume();

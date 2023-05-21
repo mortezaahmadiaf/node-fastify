@@ -8,6 +8,7 @@ import type {
 import { Model } from "@sequelize/core";
 import { Profile, IProfile } from "../Profile-Model/profile-schema";
 
+
 class User extends Model<
   InferAttributes<User, {}>,
   InferCreationAttributes<User, {}>
@@ -123,5 +124,6 @@ export interface IUserProfile {
   id: string;
   profile: IProfile | null;
 }
+
 
 export { User };

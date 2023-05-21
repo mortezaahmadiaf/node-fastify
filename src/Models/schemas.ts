@@ -3,6 +3,7 @@ export {
   IUpdateProfile,
   IProfileI,
 } from "./Profile-Model/profile-schema";
+
 export {
   ISaltUser,
   IUser,
@@ -36,3 +37,5 @@ export interface IId {
 export interface IToken {
   token: string;
 }
+=======
+} from "./User-Model/user-schema";

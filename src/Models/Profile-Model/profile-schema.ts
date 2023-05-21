@@ -98,4 +98,5 @@ export interface IProfileI {
   firstName: string;
   lastName?: string;
 }
+
 export { Profile };
