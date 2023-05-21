@@ -6,7 +6,8 @@ import type {
   CreationOptional,
 } from "@sequelize/core";
 import { Model } from "@sequelize/core";
-import { Profile } from "../Profile-Model/profile-schema";
+import { Profile, IProfile } from "../Profile-Model/profile-schema";
+
 
 class User extends Model<
   InferAttributes<User, {}>,
@@ -114,5 +115,15 @@ export interface IUpdateUser {
   password: string;
   salt?: string;
 }
+export interface IUserI {
+  id: string;
+  username: string;
+}
+export interface IUserProfile {
+  username: string;
+  id: string;
+  profile: IProfile | null;
+}
+
 
 export { User };

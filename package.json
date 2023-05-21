@@ -4,8 +4,12 @@
   "description": "nodejs with fastify",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
-    "build": "tsc"
+    "start": "tsoa spec && nodemon ./src/index.ts",
+    "build": "tsc",
+    "predev": "npm run swagger",
+    "prebuild": "npm run swagger",
+    "swagger": "tsoa spec"
+
   },
   "keywords": [
     "node",
@@ -15,6 +19,9 @@
   "author": "Morteza Ahmadi",
   "license": "ISC",
   "dependencies": {
+    "@fastify/swagger": "^8.4.0",
+    "@fastify/swagger-ui": "^1.8.1",
+
     "@sequelize/core": "^7.0.0-alpha.23",
     "amqplib": "^0.10.3",
     "chalk": "^4.1.2",
@@ -26,6 +33,8 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.2.4",
     "nodemon": "^2.0.22",
+    "redis": "^4.6.6",
+    "tsoa": "^5.1.1"
     "redis": "^4.6.6"
   },
   "devDependencies": {
