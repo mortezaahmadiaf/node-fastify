@@ -1,8 +1,13 @@
+import fastify, { FastifyInstance, FastifyReply } from "fastify";
 import fastify, { FastifyInstance } from "fastify";
 import { TestRouter, ProfileRoutes, UserRoutes } from "./Routers/v1";
 import { preHandler, onSend } from "./Features/Middlewares";
 import { Mysql } from "./Features/DB-Connections";
 import { RabbitMQConsume } from "./Features/Utilities/rabbit-mq";
+import * as swagger from "./Routers/Docs/swagger.json";
+import dotenv from "dotenv";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -30,6 +35,23 @@ export class Application {
       (fastify, opts, done) => new ProfileRoutes(fastify, opts, done),
       { prefix: "/profile" }
     );
+
+    this.swaggerApiDoc();
+  };
+  swaggerApiDoc() {
+    this.app.register(fastifySwagger);
+    this.app.register(fastifySwaggerUi, {
+      routePrefix: "/docs",
+      transformSpecification: (
+        swaggerObject: any,
+        request: any,
+        reply: any
+      ) => {
+        return swagger;
+      },
+      transformSpecificationClone: true,
+    });
+  }
   };
 
   async rabbitMqConsumer() {
